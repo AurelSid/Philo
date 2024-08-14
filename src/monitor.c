@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/14 18:12:37 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:19:03 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ void	*monitor(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		if (data->finished_philos >= data->philo_c || data->death_count > 0)
-			break ;
 		i = 0;
 		while (i < data->philo_c)
 		{
+			if (data->philo_array[i].eat_count == data->min_meals)
+			{
+				data->finished_philos++;
+			}
 			if (data->finished_philos >= data->philo_c)
 			{
 				pthread_mutex_lock(&data->print_lock);
@@ -61,6 +63,8 @@ void	*monitor(void *arg)
 			}
 			i++;
 		}
+		if (data->finished_philos >= data->philo_c || data->death_count > 0)
+			break ;
 	}
 	return (NULL);
 }

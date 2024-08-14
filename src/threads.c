@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/14 18:12:37 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:19:54 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_set_state(t_philosopher *philo)
 		print_status(philo->id, philo->data, "is eating");
 		ft_usleep(philo->data->t_to_eat);
 		philo->eat_count++;
-		if (philo->eat_count == philo->data->min_meals)
-			philo->data->finished_philos++;
 		pthread_mutex_unlock(philo->next_fork);
 		pthread_mutex_unlock(&philo->own_fork);
 		philo->state = 's';
@@ -75,6 +73,7 @@ int	ft_init_threads(t_data *data)
 	}
 	data->philo_array[i].next_fork = &data->philo_array[0].own_fork;
 	i = 0;
+
 	while (i < data->philo_c)
 	{
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,

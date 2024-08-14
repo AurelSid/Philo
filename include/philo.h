@@ -40,8 +40,10 @@ typedef struct s_data
 	long				start_time;
 	int					death_count;
 	pthread_mutex_t		death_count_mutex;
+	pthread_mutex_t		finished_p_mutex;
 	pthread_t			monitor;
 	int					finished_philos;
+
 
 }						t_data;
 
