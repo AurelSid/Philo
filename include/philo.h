@@ -35,19 +35,18 @@ typedef struct s_data
 	int					t_to_sleep;
 	t_philosopher		*philo_array;
 	pthread_mutex_t		starting_block;
-	pthread_mutex_t		routine_lock;
+
 	pthread_mutex_t		print_lock;
 	long				start_time;
-	pthread_mutex_t		print_mutex;
 	int					death_count;
 	pthread_mutex_t		death_count_mutex;
 	pthread_t			monitor;
-	int					finished_philosphers;
+	int					finished_philos;
 
 }						t_data;
 
 int						ft_get_args(int argc, char **argv, t_data *data);
-int						ft_print_philos(t_data *data);
+
 int						ft_pickup_forks(t_philosopher *philo);
 
 void					wait_for_philosophers(t_data *data, int index);
@@ -57,5 +56,6 @@ void					print_status(int philosopher_id, t_data *data,
 							const char *status);
 void					*monitor(void *arg);
 int						ft_reset_clock(t_philosopher *philo);
+int						ft_init_threads(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/14 15:25:59 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:12:37 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	ft_found_dead(t_data *data)
 
 	pthread_mutex_lock(&data->death_count_mutex);
 	current_time = get_current_time_in_ms() - data->start_time;
+	pthread_mutex_lock(&data->print_lock);
 	printf("Philo %d died , he waited for %ldms\n", data->death_count,
 		data->philo_array[data->death_count - 1].time_waited);
+	pthread_mutex_unlock(&data->print_lock);
 	pthread_mutex_unlock(&data->death_count_mutex);
 }
 
@@ -33,15 +35,16 @@ void	*monitor(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		if (data->finished_philosphers >= data->philo_c
-			|| data->death_count > 0)
+		if (data->finished_philos >= data->philo_c || data->death_count > 0)
 			break ;
 		i = 0;
 		while (i < data->philo_c)
 		{
-			if (data->finished_philosphers >= data->philo_c)
+			if (data->finished_philos >= data->philo_c)
 			{
+				pthread_mutex_lock(&data->print_lock);
 				printf("FINISHED------------************************\n");
+				pthread_mutex_unlock(&data->print_lock);
 				wait_for_philosophers(data, data->philo_c);
 				break ;
 			}
