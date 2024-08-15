@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:53:33 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 14:12:17 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 14:20:25 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_clean(t_data *data, int index)
 	free(data->philo_array);
 }
 
-void	ft_destroy_mutexes(int mutex_index, t_data *data)
+int ft_destroy_mutexes(int mutex_index, t_data *data)
 {
 	int	i;
 
@@ -35,8 +35,9 @@ void	ft_destroy_mutexes(int mutex_index, t_data *data)
 		pthread_mutex_destroy(&data->mutex_array[i]);
 		i++;
 	}
+	return (0);
 }
-void	ft_destroy_forks(int fork_index, t_data *data)
+int ft_destroy_forks(int fork_index, t_data *data)
 {
 	int i;
 	i = 0;
@@ -46,4 +47,5 @@ void	ft_destroy_forks(int fork_index, t_data *data)
 		pthread_mutex_destroy(&data->philo_array[i].own_fork);
 		i++;
 	}
+	return (0);
 }

@@ -63,5 +63,7 @@ void					print_status(int philosopher_id, t_data *data,
 void					*monitor(void *arg);
 int						ft_reset_clock(t_philosopher *philo);
 int						ft_init_threads(t_data *data);
+int						ft_destroy_mutexes(int mutex_index, t_data *data);
+int						ft_destroy_forks(int fork_index, t_data *data);
 
 #endif
