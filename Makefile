@@ -13,7 +13,7 @@ CFLAGS              = -Wall -Werror -Wextra
 RM                  = rm -f 
 
 # Source files
-SRCS                = main.c get_args.c utils.c monitor.c threads.c
+SRCS                = main.c get_args.c utils.c monitor.c threads.c exit_clean.c
 
 # File paths
 SRC                 = $(addprefix $(SRC_DIR), $(SRCS))
