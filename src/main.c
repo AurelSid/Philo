@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:41:20 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 13:11:01 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 14:08:09 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,23 @@ int	ft_init_mutex(t_data *data)
 	}
 	return (1);
 }
-
+void	ft_fill_data(t_data *data)
+{
+	data->mutex_array[0] = data->print_lock;
+	data->mutex_array[1] = data->death_count_mutex;
+	data->mutex_array[2] = data->starting_block;
+	data->mutex_array[3] = data->finished_p_mutex;
+	data->start_time = get_current_time_in_ms();
+	data->philo_array = ft_calloc(data->philo_c, sizeof(t_philosopher));
+	data->finished_philos = 0;
+}
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
 	if (!ft_get_args(argc, argv, &data))
 		return (0);
-	data.start_time = get_current_time_in_ms();
-	data.philo_array = ft_calloc(data.philo_c, sizeof(t_philosopher));
-	data.finished_philos = 0;
+	ft_fill_data(&data);
 	ft_init_mutex(&data);
 	ft_init_threads(&data);
 	pthread_create(&data.monitor, NULL, monitor, &data);

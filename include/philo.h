@@ -33,17 +33,21 @@ typedef struct s_data
 	int					t_to_eat;
 	int					min_meals;
 	int					t_to_sleep;
-	t_philosopher		*philo_array;
-	pthread_mutex_t		starting_block;
 
-	pthread_mutex_t		print_lock;
-	long				start_time;
-	int					death_count;
+	t_philosopher		*philo_array;
+
+	pthread_mutex_t		starting_block;
 	pthread_mutex_t		death_count_mutex;
 	pthread_mutex_t		finished_p_mutex;
-	pthread_t			monitor;
+	pthread_mutex_t		print_lock;
+
+	long				start_time;
+	int					death_count;
 	int					finished_philos;
 
+	pthread_mutex_t		mutex_array[4];
+
+	pthread_t			monitor;
 
 }						t_data;
 
