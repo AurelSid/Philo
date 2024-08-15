@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/14 19:19:03 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:16:41 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*monitor(void *arg)
 				pthread_mutex_lock(&data->print_lock);
 				printf("FINISHED------------************************\n");
 				pthread_mutex_unlock(&data->print_lock);
-				wait_for_philosophers(data, data->philo_c);
+				exit_clean(data, data->philo_c);
 				break ;
 			}
 			current_time = get_current_time_in_ms();
@@ -58,7 +58,7 @@ void	*monitor(void *arg)
 				data->philo_array[i].time_waited = elapsed_time;
 				data->death_count = i + 1;
 				ft_found_dead(data);
-				wait_for_philosophers(data, data->philo_c);
+				exit_clean(data, data->philo_c);
 				break ;
 			}
 			i++;

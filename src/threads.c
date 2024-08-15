@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 12:51:00 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:16:41 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ int	ft_init_threads(t_data *data)
 
 	while (i < data->philo_c)
 	{
-		if (pthread_mutex_init(&data->philo_array[i].own_fork, NULL))
-			return (0);
+		
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,
 				(void *)&data->philo_array[i]) != 0)
 		{
-			wait_for_philosophers(data, i);
+			exit_clean(data, i);
 			return (1);
 		}
 
