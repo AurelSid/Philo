@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 13:16:41 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:00:10 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	ft_set_state(t_philosopher *philo)
 	{
 		print_status(philo->id, philo->data, "is eating");
 		ft_usleep(philo->data->t_to_eat);
+		pthread_mutex_lock(&philo->lock_eat_c);
 		philo->eat_count++;
+		pthread_mutex_unlock(&philo->lock_eat_c);
 		pthread_mutex_unlock(philo->next_fork);
 		pthread_mutex_unlock(&philo->own_fork);
 		philo->state = 's';
@@ -40,9 +42,11 @@ void	*routine(void *arg)
 		usleep(100);
 	while (1)
 	{
+		pthread_mutex_lock(&philo->data->finished_p_mutex);
 		if (philo->data->finished_philos >= philo->data->philo_c
 			|| philo->data->death_count > 0)
 			break ;
+		pthread_mutex_unlock(&philo->data->finished_p_mutex);
 		ft_pickup_forks(philo);
 		ft_set_state(philo);
 	}
@@ -76,7 +80,6 @@ int	ft_init_threads(t_data *data)
 
 	while (i < data->philo_c)
 	{
-		
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,
 				(void *)&data->philo_array[i]) != 0)
 		{

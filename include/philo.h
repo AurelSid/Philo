@@ -19,6 +19,8 @@ typedef struct s_philosopher
 	pthread_t			this_thread;
 	pthread_mutex_t		own_fork;
 	pthread_mutex_t		*next_fork;
+	pthread_mutex_t		lock_tslm;
+	pthread_mutex_t		lock_eat_c;
 	t_data				*data;
 	long				time_of_new_meal;
 	long				time_of_last_meal;

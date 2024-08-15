@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 13:16:41 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:02:28 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ void	*monitor(void *arg)
 		i = 0;
 		while (i < data->philo_c)
 		{
+			pthread_mutex_lock(&data->philo_array[i].lock_eat_c);
 			if (data->philo_array[i].eat_count == data->min_meals)
 			{
+				pthread_mutex_lock(&data->finished_p_mutex);
 				data->finished_philos++;
+				pthread_mutex_unlock(&data->finished_p_mutex);
 			}
+			pthread_mutex_unlock(&data->philo_array[i].lock_eat_c);
 			if (data->finished_philos >= data->philo_c)
 			{
 				pthread_mutex_lock(&data->print_lock);
@@ -51,8 +55,10 @@ void	*monitor(void *arg)
 				break ;
 			}
 			current_time = get_current_time_in_ms();
+			pthread_mutex_lock(&data->philo_array[i].lock_tslm);
 			elapsed_time = current_time
 				- data->philo_array[i].time_of_last_meal;
+			pthread_mutex_unlock(&data->philo_array[i].lock_tslm);
 			if (elapsed_time > data->t_to_die)
 			{
 				data->philo_array[i].time_waited = elapsed_time;
@@ -74,6 +80,8 @@ int	ft_reset_clock(t_philosopher *philo)
 	long	current_time;
 
 	current_time = get_current_time_in_ms();
+	pthread_mutex_lock(&philo->lock_tslm);
 	philo->time_of_last_meal = current_time;
+	pthread_mutex_unlock(&philo->lock_tslm);
 	return (1);
 }

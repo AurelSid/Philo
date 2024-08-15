@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:41:20 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 14:23:49 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:51:16 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_init_mutex(t_data *data)
 		return (ft_destroy_mutexes(1, data));
 	while (i < data->philo_c)
 	{
+		pthread_mutex_init(&data->philo_array[i].lock_tslm, NULL);
+		pthread_mutex_init(&data->philo_array[i].lock_eat_c, NULL);
 		if (pthread_mutex_init(&data->philo_array[i].own_fork, NULL))
 		{
 			ft_destroy_mutexes(3, data);
