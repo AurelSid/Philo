@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:41:20 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 18:14:31 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:35:12 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	print_status(int philosopher_id, t_data *data, const char *status)
 	death_count = data->death_count;
 	pthread_mutex_unlock(&data->death_count_mutex);
 	timestamp = get_current_time_in_ms() - data->start_time;
-	if (finished_philos < data->philo_c && death_count == 0)
-	{
+	// if (finished_philos < data->philo_c && death_count == 0)
+	// {
 		pthread_mutex_lock(&data->print_lock);
 		printf("%-15ld %-5d %-15s\n", timestamp, philosopher_id, status);
 		pthread_mutex_unlock(&data->print_lock);
-	}
+	// }
 }
 
 long	get_current_time_in_ms(void)
