@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:41:20 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 16:51:16 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 14:15:02 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ long	get_current_time_in_ms(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
+
 int	ft_init_mutex(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&data->lock_break, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&data->death_count_mutex, NULL) != 0)
 		return (ft_destroy_mutexes(1, data));
@@ -45,6 +48,7 @@ int	ft_init_mutex(t_data *data)
 	}
 	return (1);
 }
+
 void	ft_fill_data(t_data *data)
 {
 	data->mutex_array[0] = data->print_lock;
@@ -52,9 +56,11 @@ void	ft_fill_data(t_data *data)
 	data->mutex_array[2] = data->starting_block;
 	data->mutex_array[3] = data->finished_p_mutex;
 	data->start_time = get_current_time_in_ms();
+	data->break_threads = 0;
 	data->philo_array = ft_calloc(data->philo_c, sizeof(t_philosopher));
 	data->finished_philos = 0;
 }
+
 int	main(int argc, char **argv)
 {
 	t_data	data;

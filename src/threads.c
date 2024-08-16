@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/15 17:00:10 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 14:14:31 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_set_state(t_philosopher *philo)
 	}
 	return (1);
 }
+
 void	*routine(void *arg)
 {
 	t_philosopher	*philo;
@@ -45,7 +46,10 @@ void	*routine(void *arg)
 		pthread_mutex_lock(&philo->data->finished_p_mutex);
 		if (philo->data->finished_philos >= philo->data->philo_c
 			|| philo->data->death_count > 0)
+		{
+			pthread_mutex_unlock(&philo->data->finished_p_mutex);
 			break ;
+		}
 		pthread_mutex_unlock(&philo->data->finished_p_mutex);
 		ft_pickup_forks(philo);
 		ft_set_state(philo);
@@ -53,12 +57,11 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int	ft_init_threads(t_data *data)
+void	ft_set_philo_data(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	while (i < data->philo_c)
 	{
 		data->philo_array[i].eat_count = 0;
@@ -69,7 +72,14 @@ int	ft_init_threads(t_data *data)
 		data->philo_array[i].time_of_last_meal = data->start_time;
 		i++;
 	}
+}
+
+int	ft_init_threads(t_data *data)
+{
+	int	i;
+
 	i = 0;
+	ft_set_philo_data(data);
 	while (i < data->philo_c - 1)
 	{
 		data->philo_array[i].next_fork = &data->philo_array[i + 1].own_fork;
@@ -77,7 +87,6 @@ int	ft_init_threads(t_data *data)
 	}
 	data->philo_array[i].next_fork = &data->philo_array[0].own_fork;
 	i = 0;
-
 	while (i < data->philo_c)
 	{
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,
@@ -86,7 +95,6 @@ int	ft_init_threads(t_data *data)
 			exit_clean(data, i);
 			return (1);
 		}
-
 		i++;
 	}
 	pthread_mutex_unlock(&data->starting_block);
