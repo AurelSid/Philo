@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 19:25:44 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:10:44 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ int	ft_set_state(t_philosopher *philo)
 	{
 		print_status(philo->id, philo->data, "is eating");
 		ft_usleep(philo->data->t_to_eat);
-		// if (philo->min_meals != -1)
-		// 	philo->min_meals--;
-		// if(philo->min_meals == 0)
-		// {
+		philo->eat_count++;
+		if (philo->eat_count == philo->data->min_meals)
+		{
 			pthread_mutex_lock(&philo->lock_eat_c);
-			philo->eat_count++;
+			philo->data->finished_philos++;
 			pthread_mutex_unlock(&philo->lock_eat_c);
-		// }
+		}
 		pthread_mutex_unlock(philo->next_fork);
 		pthread_mutex_unlock(&philo->own_fork);
 		philo->state = 's';
@@ -84,13 +83,13 @@ void	ft_set_philo_data(t_data *data)
 	}
 }
 
-void ft_init_philo_tslm(t_data *data, int philo_count)
+void	ft_init_philo_tslm(t_data *data, int philo_count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->start_time = get_current_time_in_ms();
-	while(i < philo_count)
+	while (i < philo_count)
 	{
 		data->philo_array[i].time_of_last_meal = data->start_time;
 		i++;

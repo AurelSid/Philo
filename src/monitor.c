@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 19:54:51 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:07:43 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_found_dead(t_data *data)
 	current_time = get_current_time_in_ms() - data->start_time;
 	pthread_mutex_lock(&data->print_lock);
 	printf("Philo %d died , he waited for %ldms\n", data->death_count,
-	data->philo_array[data->death_count - 1].time_waited);
+		data->philo_array[data->death_count - 1].time_waited);
 	pthread_mutex_unlock(&data->print_lock);
 	// pthread_mutex_unlock(&data->death_count_mutex);
 }
@@ -32,7 +32,9 @@ void	*monitor(void *arg)
 	long	current_time;
 	int		i;
 	int		eat_c;
+	int		j;
 
+	j = 0;
 	data = (t_data *)arg;
 	while (1)
 	{
@@ -42,17 +44,15 @@ void	*monitor(void *arg)
 			pthread_mutex_lock(&data->philo_array[i].lock_eat_c);
 			eat_c = data->philo_array[i].eat_count;
 			pthread_mutex_unlock(&data->philo_array[i].lock_eat_c);
-			if (eat_c == data->min_meals)
-			{
-				pthread_mutex_lock(&data->finished_p_mutex);
-				data->finished_philos++;
-				pthread_mutex_unlock(&data->finished_p_mutex);
-			}
 			if (data->finished_philos >= data->philo_c)
 			{
 				data->break_threads = 1;
 				pthread_mutex_lock(&data->print_lock);
-				
+				while (j < data->philo_c)
+				{
+					printf("filo meals: %d\n", data->philo_array[j].eat_count);
+					j++;
+				}
 				printf("FINISHED------------************************\n");
 				pthread_mutex_unlock(&data->print_lock);
 				exit_clean(data, data->philo_c);
