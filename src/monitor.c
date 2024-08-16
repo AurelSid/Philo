@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 17:59:27 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:12:55 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	*monitor(void *arg)
 			pthread_mutex_unlock(&data->philo_array[i].lock_eat_c);
 			if (eat_c == data->min_meals)
 			{
-				pthread_mutex_lock(&data->finished_p_mutex);
-				data->finished_philos++;
-				pthread_mutex_unlock(&data->finished_p_mutex);
+				// pthread_mutex_lock(&data->finished_p_mutex);
+				// data->finished_philos++;
+				// pthread_mutex_unlock(&data->finished_p_mutex);
 			}
 			if (data->finished_philos >= data->philo_c)
 			{

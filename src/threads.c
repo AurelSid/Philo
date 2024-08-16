@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 18:04:48 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:06:20 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,30 @@ void	ft_set_philo_data(t_data *data)
 		data->philo_array[i].state = 't';
 		data->philo_array[i].data = data;
 		data->philo_array[i].id = i + 1;
-		data->philo_array[i].time_of_last_meal = data->start_time;
+		// data->philo_array[i].time_of_last_meal = data->start_time;
 		i++;
 	}
 }
 
+void ft_init_philo_tslm(t_data *data, int philo_count)
+{
+	int i;
+
+	i = 0;
+	data->start_time = get_current_time_in_ms();
+	while(i < philo_count)
+	{
+		data->philo_array[i].time_of_last_meal = data->start_time;
+		i++;
+	}
+}
 int	ft_init_threads(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	ft_set_philo_data(data);
+	pthread_mutex_lock(&data->starting_block);
 	while (i < data->philo_c - 1)
 	{
 		data->philo_array[i].next_fork = &data->philo_array[i + 1].own_fork;
@@ -97,12 +110,14 @@ int	ft_init_threads(t_data *data)
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,
 				(void *)&data->philo_array[i]) != 0)
 		{
+			// ft_init_philo_tslm(data, i);
 			exit_clean(data, i);
 			return (1);
 		}
 		i++;
 	}
-	data->start_time = get_current_time_in_ms();
+	// data->start_time = get_current_time_in_ms();
+	ft_init_philo_tslm(data, data->philo_c);
 	pthread_mutex_unlock(&data->starting_block);
 	return (0);
 }
