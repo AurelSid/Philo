@@ -43,7 +43,7 @@ typedef struct s_data
 	pthread_mutex_t		death_count_mutex;
 	pthread_mutex_t		finished_p_mutex;
 	pthread_mutex_t		print_lock;
-	pthread_mutex_t		lock_break;
+	pthread_mutex_t lock_break ;
 
 	long				start_time;
 	int					death_count;
@@ -69,5 +69,7 @@ int						ft_reset_clock(t_philosopher *philo);
 int						ft_init_threads(t_data *data);
 int						ft_destroy_mutexes(int mutex_index, t_data *data);
 int						ft_destroy_forks(int fork_index, t_data *data);
+int						ft_init_threads(t_data *data);
+void					*routine(void *arg);
 
 #endif

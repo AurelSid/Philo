@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:41:20 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/16 18:04:31 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:13:32 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_init_data_mutexes(t_data *data)
 {
-	
 	data->philo_array = ft_calloc(data->philo_c, sizeof(t_philosopher));
 	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
 		return (0);

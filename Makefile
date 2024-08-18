@@ -9,11 +9,11 @@ OBJ_DIR             = obj/
 
 # Compiler and CFlags
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -fsanitize=thread -g3
+CFLAGS              = -Wall -Werror -Wextra #-fsanitize=thread -g3
 RM                  = rm -f 
 
 # Source files
-SRCS                = main.c get_args.c utils.c monitor.c threads.c exit_clean.c
+SRCS                = main.c get_args.c utils.c monitor.c threads.c exit_clean.c initialize_threads.c
 
 # File paths
 SRC                 = $(addprefix $(SRC_DIR), $(SRCS))
