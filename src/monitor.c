@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 14:34:43 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:30:24 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_finished_philosophers(t_data *data)
 		data->break_threads = 1;
 		pthread_mutex_lock(&data->print_lock);
 		pthread_mutex_unlock(&data->print_lock);
-		exit_clean(data, data->philo_c, 1);
+		         exit_clean(data, data->philo_c, 1);
 		return (1);
 	}
 	return (0);
