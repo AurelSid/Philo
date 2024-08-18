@@ -6,13 +6,13 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:53:33 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 12:13:18 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:15:58 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	exit_clean(t_data *data, int index)
+void	exit_clean(t_data *data, int index, int flag)
 {
 	int	i;
 
@@ -22,6 +22,8 @@ void	exit_clean(t_data *data, int index)
 		pthread_join(data->philo_array[i].this_thread, NULL);
 		i++;
 	}
+	if (flag == 1)
+		printf("FINISHEEEEED***********");
 	free(data->philo_array);
 }
 

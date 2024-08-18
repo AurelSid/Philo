@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:51:13 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 13:15:45 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:29:53 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	ft_found_dead(t_data *data)
 
 	current_time = get_current_time_in_ms() - data->start_time;
 	pthread_mutex_lock(&data->print_lock);
-	printf("%d is dead\n", data->death_count,
-		data->philo_array[data->death_count - 1].time_waited);
+	printf("%d is deads\n", data->death_count);
 	pthread_mutex_unlock(&data->print_lock);
 }
 
@@ -33,10 +32,9 @@ int	check_finished_philosophers(t_data *data)
 	if (finished_philos >= data->philo_c)
 	{
 		data->break_threads = 1;
-		// pthread_mutex_lock(&data->print_lock);
-		// printf("FINISHED------------************************\n");
-		// pthread_mutex_unlock(&data->print_lock);
-		exit_clean(data, data->philo_c);
+		pthread_mutex_lock(&data->print_lock);
+		pthread_mutex_unlock(&data->print_lock);
+		exit_clean(data, data->philo_c, 1);
 		return (1);
 	}
 	return (0);
@@ -59,7 +57,7 @@ int	check_philosopher_death(t_data *data, int i)
 		data->death_count = i + 1;
 		pthread_mutex_unlock(&data->death_count_mutex);
 		ft_found_dead(data);
-		exit_clean(data, data->philo_c);
+		exit_clean(data, data->philo_c, 3);
 		return (1);
 	}
 	return (0);
@@ -79,7 +77,7 @@ void	*monitor(void *arg)
 		{
 			if (check_finished_philosophers(data)
 				|| check_philosopher_death(data, i))
-				return (NULL);
+				break ;
 			i++;
 		}
 		pthread_mutex_lock(&data->finished_p_mutex);

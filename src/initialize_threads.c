@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:01:47 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 12:03:21 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:13:11 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_init_threads(t_data *data)
 		if (pthread_create(&data->philo_array[i].this_thread, NULL, routine,
 				(void *)&data->philo_array[i]) != 0)
 		{
-			exit_clean(data, i);
+			exit_clean(data, i,3);
 			return (1);
 		}
 		i++;

@@ -59,7 +59,6 @@ int						ft_get_args(int argc, char **argv, t_data *data);
 
 int						ft_pickup_forks(t_philosopher *philo);
 
-void					exit_clean(t_data *data, int index);
 int						ft_usleep(size_t milliseconds);
 long					get_current_time_in_ms(void);
 void					print_status(int philosopher_id, t_data *data,
@@ -71,5 +70,6 @@ int						ft_destroy_mutexes(int mutex_index, t_data *data);
 int						ft_destroy_forks(int fork_index, t_data *data);
 int						ft_init_threads(t_data *data);
 void					*routine(void *arg);
+void					exit_clean(t_data *data, int index, int flag);
 
 #endif
