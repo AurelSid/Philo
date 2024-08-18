@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/18 14:48:49 by asideris          #+#    #+#             */
+/*   Updated: 2024/08/18 14:49:08 by asideris         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -43,7 +55,7 @@ typedef struct s_data
 	pthread_mutex_t		death_count_mutex;
 	pthread_mutex_t		finished_p_mutex;
 	pthread_mutex_t		print_lock;
-	pthread_mutex_t lock_break ;
+	pthread_mutex_t		lock_break ;
 
 	long				start_time;
 	int					death_count;

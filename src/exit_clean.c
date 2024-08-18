@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:53:33 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 14:15:58 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:41:43 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exit_clean(t_data *data, int index, int flag)
 		i++;
 	}
 	if (flag == 1)
-		printf("FINISHEEEEED***********");
+		printf("");
 	free(data->philo_array);
 }
 

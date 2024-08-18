@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:21:36 by asideris          #+#    #+#             */
-/*   Updated: 2024/08/18 13:58:03 by asideris         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:49:51 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	ft_pickup_forks(t_philosopher *philo)
 	ft_reset_clock(philo);
 	return (0);
 }
+
 int	ft_set_state(t_philosopher *philo)
 {
 	if (philo->state == 'e')
@@ -87,14 +88,14 @@ int	check_simulation_end(t_philosopher *philo)
 	int	finished_philos;
 	int	death_count;
 
-	if (philo->data->break_threads == 1)
-		return (1);
 	pthread_mutex_lock(&philo->data->finished_p_mutex);
 	finished_philos = philo->data->finished_philos;
 	pthread_mutex_unlock(&philo->data->finished_p_mutex);
 	pthread_mutex_lock(&philo->data->death_count_mutex);
 	death_count = philo->data->death_count;
 	pthread_mutex_unlock(&philo->data->death_count_mutex);
+	if (finished_philos >= philo->data->philo_c || death_count > 0)
+		return (1);
 	return (0);
 }
 
