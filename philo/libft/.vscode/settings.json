@@ -1,0 +1,16 @@
+{
+  "files.associations": {
+    "stdio.h": "c",
+    "stdlib.h": "c",
+    "stddef.h": "c",
+    "libft.h": "c",
+    "__tuple": "c",
+    "array": "c",
+    "sstream": "c"
+  }
+  {
+    "[c]": {
+      "editor.defaultFormatter": "keyhr.42-c-format"
+    }
+  }
+}
